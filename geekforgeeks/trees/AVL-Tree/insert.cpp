@@ -43,8 +43,9 @@ Node* rightRotate(Node* y){
 	x->right=y;
 	y->left=temp;
 
+	y->height = max(height(y->left), height(y->right))+1;
 	x->height = max(height(x->left), height(x->right))+1;
-    y->height = max(height(y->left), height(y->right))+1;
+    
 
 	return x;//new root
 }
