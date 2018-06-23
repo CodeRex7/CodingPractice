@@ -5,7 +5,7 @@ struct Node
 {
     int data;
     int count;
-    struct Node *right,*left;
+    Node *right,*left;
 };
 
 Node* newNode(int data){
