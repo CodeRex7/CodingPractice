@@ -78,31 +78,30 @@ Node* insert(Node* temp,int data){
 
     //Left Left Case---------Right Rotation
     if(balance > 1 && data < temp->left->data)
-    	return leftRotate(temp);
+    	return rightRotate(temp);
     //Right Right Case-------Left Rotation
     if(balance < -1 && data > temp->right->data)
-    	return rightRotate(temp);
+    	return leftRotate(temp);
     //Left Right Case--------Left Right Rotation
     if(balance > 1 && data > temp->left->data){
     	temp->left = leftRotate(temp->left);
-    	rightRotate(temp);
+    	return rightRotate(temp);
     }
     //Right Left Case--------Right Left Rotation 
     if(balance < -1 && data < temp->right->data){
     	temp->right = rightRotate(temp->right);
-    	leftRotate(temp);
+    	return leftRotate(temp);
     }
     return temp;
 }
 
 void preOrder(Node *root)
 {
-    if(root != NULL)
-    {
-        cout<<root->data<<" ";
-        preOrder(root->left);
-        preOrder(root->right);
-    }
+    if(!root)
+		return;    
+    cout<<root->data<<" ";
+    preOrder(root->left);
+    preOrder(root->right);
 }
 
 int main()
@@ -119,6 +118,7 @@ int main()
   printf("Preorder traversal of the constructed AVL"
          " tree is \n");
   preOrder(root);
+  cout<<endl<<root->data<<endl;
  
   return 0;
 }
