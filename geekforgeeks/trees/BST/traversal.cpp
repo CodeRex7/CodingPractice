@@ -99,6 +99,29 @@ void preorder(Node* root){
     }
 }
 
+void postorder(Node* root){
+    if(root == NULL)
+        return;
+    stack<Node*>first;
+    stack<Node*>second;
+
+    first.push(root);
+    while(!first.empty()){
+        Node* temp=first.top();
+        second.push(temp);
+        first.pop();
+        if(temp->left)
+            first.push(temp->left);
+        if(temp->right)
+            first.push(temp->right);
+    }
+    while(!second.empty()){
+        Node* temp=second.top();
+        cout<<temp->data<<" ";
+        second.pop();
+    }
+}
+
 int main(){
 	
 	Node* root=newNode(60);
@@ -119,6 +142,8 @@ int main(){
     inorder(root);
     cout<<endl;
     preorder(root);
+    cout<<endl;
+    postorder(root);
  
     printf("\nDelete 75\n");
     root = deleteNode(root, 75);
@@ -126,6 +151,8 @@ int main(){
     inorder(root);
     cout<<endl;
     preorder(root);
+    cout<<endl;
+    postorder(root);
  
     printf("\nDelete 30\n");
     root = deleteNode(root, 30);
@@ -133,6 +160,8 @@ int main(){
     inorder(root);
     cout<<endl;
     preorder(root);
+    cout<<endl;
+    postorder(root);
  
     printf("\nDelete 60\n");
     root = deleteNode(root, 60);
@@ -140,6 +169,8 @@ int main(){
     inorder(root);
     cout<<endl;            
 	preorder(root);
+    cout<<endl;
+    postorder(root);
 
 	cout<<endl;
 	return 0;
