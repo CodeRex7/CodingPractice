@@ -1,0 +1,146 @@
+/*
+*	InOrder Traversal without Recursion using Stack
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+struct Node{
+	int data;
+	Node *right;
+	Node *left;
+};
+
+Node* newNode(int data){
+	Node* temp= new Node;
+	temp->data = data;
+	temp->right = NULL;
+	temp->left = NULL;
+}
+
+Node* insert(Node* root,int data){
+	if(root == NULL)
+		return newNode(data);
+	if(data < root->data)
+		root->left = insert(root->left,data);
+	else
+		root->right = insert(root->right,data);
+	return root;
+}
+
+Node* minValueNode(Node* temp){
+    Node* current=temp;
+    while(current->left != NULL){
+        current= current->left;
+    }
+    return current;
+}
+
+Node* deleteNode(Node* root,int data){
+    if(root== NULL)
+        return root;
+    if(data > root->data)
+        root->right = deleteNode(root->right,data);
+    else if(data < root->data)
+        root->left = deleteNode(root->left,data);
+    else
+    {
+        if(root->left == NULL){
+            Node* temp=root->right;
+            free(root);
+            return temp;
+        }
+        else if(root->right == NULL){
+            Node* temp=root->left;
+            free(root);
+            return temp;
+        }
+
+        Node *temp=minValueNode(root->right);
+        root->data=temp->data;
+        root->right=deleteNode(root->right,temp->data);
+    }
+    return root;
+}
+
+void inorder(Node* root){
+	if (root == NULL)
+       return;
+    stack<Node*>stack;
+    Node* curr = root;
+    while(curr!=NULL || !stack.empty()){
+        if(curr!=NULL){
+            stack.push(curr);
+            curr=curr->left;
+        }
+        else{
+            curr=stack.top();
+            stack.pop();
+            cout<<curr->data<<" ";
+            curr=curr->right;
+        }
+    }
+}
+
+void preorder(Node* root){
+    if (root == NULL)
+       return;
+    stack<Node*>stack;
+    stack.push(root);
+
+    while(!stack.empty()){
+        Node* temp=stack.top();
+        cout<<temp->data<<" ";
+        stack.pop();
+        if(temp->right)
+            stack.push(temp->right);
+        if(temp->left)
+            stack.push(temp->left);
+    }
+}
+
+int main(){
+	
+	Node* root=newNode(60);
+	
+	insert(root,50);
+	insert(root,70);
+	insert(root,40);
+	insert(root,30);
+	insert(root,80);
+	insert(root,75);
+	insert(root,65);
+	insert(root,45);
+	insert(root,55);
+	insert(root,90);
+	insert(root,67);
+
+	printf("traversal of the given tree \n");
+    inorder(root);
+    cout<<endl;
+    preorder(root);
+ 
+    printf("\nDelete 75\n");
+    root = deleteNode(root, 75);
+    printf("traversal of the modified tree \n");
+    inorder(root);
+    cout<<endl;
+    preorder(root);
+ 
+    printf("\nDelete 30\n");
+    root = deleteNode(root, 30);
+    printf("traversal of the modified tree \n");
+    inorder(root);
+    cout<<endl;
+    preorder(root);
+ 
+    printf("\nDelete 60\n");
+    root = deleteNode(root, 60);
+    printf("traversal of the modified tree \n");
+    inorder(root);
+    cout<<endl;            
+	preorder(root);
+
+	cout<<endl;
+	return 0;
+}
