@@ -122,6 +122,41 @@ void postorder(Node* root){
     }
 }
 
+Node* peek(stack<Node*> stack)
+{
+    if (stack.empty())
+        return NULL;
+    return stack.top();
+}
+
+void adv_postorder(Node* root){
+    if(root == NULL)
+        return;
+    stack<Node*>stack;
+    do{
+        while(root){
+            if(root->right)
+                stack.push(root->right);
+            stack.push(root);
+
+            root=root->left;
+        }
+
+        root=stack.top();
+        stack.pop();
+
+        if(root->right && peek(stack)==root->right){
+            stack.pop();
+            stack.push(root);
+            root=root->right;
+        }
+        else{
+            cout<<root->data<<" ";
+            root=NULL;
+        }
+    }while(!stack.empty());
+}
+
 int main(){
 	
 	Node* root=newNode(60);
@@ -144,6 +179,8 @@ int main(){
     preorder(root);
     cout<<endl;
     postorder(root);
+    cout<<endl;
+    adv_postorder(root);
  
     printf("\nDelete 75\n");
     root = deleteNode(root, 75);
@@ -153,6 +190,8 @@ int main(){
     preorder(root);
     cout<<endl;
     postorder(root);
+    cout<<endl;
+    adv_postorder(root);
  
     printf("\nDelete 30\n");
     root = deleteNode(root, 30);
@@ -162,6 +201,8 @@ int main(){
     preorder(root);
     cout<<endl;
     postorder(root);
+    cout<<endl;
+    adv_postorder(root);
  
     printf("\nDelete 60\n");
     root = deleteNode(root, 60);
@@ -171,6 +212,8 @@ int main(){
 	preorder(root);
     cout<<endl;
     postorder(root);
+    cout<<endl;
+    adv_postorder(root);
 
 	cout<<endl;
 	return 0;
