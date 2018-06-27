@@ -1,5 +1,10 @@
 /*
-*	InOrder Traversal without Recursion using Stack
+*	Traversals without Recursion using Stack
+*   Inorder Traversal using stack
+*   Preorder Traversal uing stack
+*   Postorder Traversal using two stacks
+*   Postorder Traversal using a stack
+*   levelorder Traversal using queue
 */
 
 #include<bits/stdc++.h>
@@ -155,6 +160,22 @@ void adv_postorder(Node* root){
             root=NULL;
         }
     }while(!stack.empty());
+}
+
+void levelorder(Node* root){
+    if(!root)
+        return;
+    queue<Node*>q;
+    while(root){
+        cout<<root->data<<" ";
+
+        if(root->left)
+            q.push(root->left);
+        if(root->right)
+            q.push(root->right);
+        root=q.front();
+        q.pop();
+    }
 }
 
 int main(){
